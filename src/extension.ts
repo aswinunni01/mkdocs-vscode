@@ -17,6 +17,11 @@ export function activate(context: vscode.ExtensionContext) {
         updateUI(server, statusBarItem, viewProvider);
     };
 
+    // Listen for server state changes (e.g. if the process crashes or is killed)
+    server.onStateChange = () => {
+        updateUI(server, statusBarItem, viewProvider);
+    };
+
     // Register start command
     const startDisposable = vscode.commands.registerCommand('mkdocs-vscode.startPreview', (options?: { skipBrowser?: boolean }) => {
         // Allow dynamic port configuration
@@ -64,13 +69,6 @@ export function activate(context: vscode.ExtensionContext) {
     updateUI(server, statusBarItem, viewProvider);
     statusBarItem.show();
 
-    // Listen for when terminals are closed
-    const terminalListener = vscode.window.onDidCloseTerminal(terminal => {
-        const wasManagedTerminal = server.handleTerminalClose(terminal);
-        if (wasManagedTerminal) {
-            updateUI(server, statusBarItem, viewProvider);
-        }
-    });
 
     // Listen for configuration changes
     const configListener = vscode.workspace.onDidChangeConfiguration(async e => {
@@ -96,7 +94,7 @@ export function activate(context: vscode.ExtensionContext) {
     const webviewDisposable = vscode.window.registerWebviewViewProvider(MkDocsViewProvider.viewType, viewProvider);
 
     // Cleanup when the extension is deactivated
-    context.subscriptions.push(startDisposable, stopDisposable, statusBarItem, terminalListener, configListener, webviewDisposable);
+    context.subscriptions.push(startDisposable, stopDisposable, statusBarItem, configListener, webviewDisposable);
 }
 
 export function deactivate() {
