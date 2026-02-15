@@ -16,18 +16,57 @@
     "workspaceContains:**/mkdocs.yml"
   ],
   "contributes": {
+    "configuration": {
+      "title": "MkDocs Preview",
+      "properties": {
+        "mkdocs-vscode.port": {
+          "type": "number",
+          "default": 8000,
+          "description": "The port number to run the MkDocs server on."
+        }
+      }
+    },
     "commands": [
       {
         "command": "mkdocs-vscode.startPreview",
         "title": "MkDocs: Start Preview",
-        "category": "MkDocs"
+        "category": "MkDocs",
+        "icon": "telescope"
       },
       {
         "command": "mkdocs-vscode.stopPreview",
         "title": "MkDocs: Stop Preview",
         "category": "MkDocs"
       }
-    ]
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "mkdocs-vscode.startPreview",
+          "group": "navigation",
+          "when": "resourceExtname == .md"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "mkdocs-vscode",
+          "title": "Mkdocs Preview",
+          "icon": "telescope"
+        }
+      ]
+    },
+    "views": {
+      "mkdocs-vscode": [
+        {
+          "id": "mkdocs-vscode-view",
+          "name": "MkDocs Preview",
+          "type": "webview",
+          "icon": "telescope"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
