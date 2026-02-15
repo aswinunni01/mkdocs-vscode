@@ -44,8 +44,15 @@ export class MkDocsServer {
     }
 
     public stop() {
-        if (this.process) {
-            this.process.kill(); // Kill the process directly
+        if (this.process && this.process.pid) {
+            if (process.platform === 'win32') {
+                // On Windows, spawn with shell:true creates a wrapper process.
+                // We must kill the entire process tree (/t) forcefully (/f).
+                const { exec } = require('child_process');
+                exec(`taskkill /pid ${this.process.pid} /T /F`);
+            } else {
+                this.process.kill('SIGTERM');
+            }
             this.process = undefined;
             this.onStateChange?.();
         }
