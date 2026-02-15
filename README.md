@@ -62,6 +62,20 @@ This extension contributes the following settings:
 
 ---
 
+## 🚥 CI/CD: Automated Deployment
+
+This extension uses **GitHub Actions** for automated publishing. 
+
+1.  **To Deploy a New Version**:
+    *   Update the `version` in `package.json`.
+    *   Create a git tag (e.g., `git tag v0.0.2`).
+    *   Push the tag (`git push origin v0.0.2`).
+2.  The workflow will automatically build, package, and publish the extension to the Marketplace.
+
+*Note: Ensure you have the `VSCE_PAT` secret configured in your GitHub repository secrets.*
+
+---
+
 ## 🤝 Contributing
 
 Contributions are welcome! If you find a bug or have a feature request, please open an issue on our [GitHub Repository](https://github.com/aswinunni01/mkdocs-vscode).

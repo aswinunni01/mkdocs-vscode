@@ -82,7 +82,8 @@
     "vscode:prepublish": "npm run compile",
     "lint": "eslint src --ext ts",
     "watch": "tsc -watch -p ./",
-    "compile": "tsc -p ./"
+    "compile": "tsc -p ./",
+    "deploy": "vsce publish --yarn"
   },
   "keywords": [],
   "author": "",
@@ -92,6 +93,7 @@
     "@types/vscode": "^1.109.0",
     "@typescript-eslint/eslint-plugin": "^8.55.0",
     "@typescript-eslint/parser": "^8.55.0",
+    "@vscode/vsce": "^3.7.1",
     "eslint": "^9.0.0",
     "typescript": "^5.9.3"
   }
