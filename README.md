@@ -18,10 +18,9 @@
 
 ---
 
-## 📸 Screenshots
+## 📸 Demo
 
-*(Add your extension screenshots here to wow your users!)*
-
+![Plugin Demo](assets/demo.gif)
 ---
 
 ## 🛠️ Requirements
