@@ -62,17 +62,18 @@ This extension contributes the following settings:
 
 ---
 
-## 🚥 CI/CD: Automated Deployment
+## 🚥 CI/CD: Fully Automated Deployment (Level 3)
 
-This extension uses **GitHub Actions** for automated publishing. 
+This extension uses a **"Zero-Touch"** CI/CD pipeline via GitHub Actions.
 
-1.  **To Deploy a New Version**:
-    *   Update the `version` in `package.json`.
-    *   Create a git tag (e.g., `git tag v0.0.2`).
-    *   Push the tag (`git push origin v0.0.2`).
-2.  The workflow will automatically build, package, and publish the extension to the Marketplace.
+1.  **Automated Workflows**: 
+    *   **Continuous Integration**: Every Push or Pull Request triggers a multi-OS build and test suite.
+    *   **Continuous Deployment**: Every push to the `main` branch automatically:
+        1.  Calculates the next version (defaulting to a `patch` bump).
+        2.  Creates and pushes a new GitHub tag (e.g., `v0.0.3`).
+        3.  Builds, packages, and publishes the version to the VS Code Marketplace.
 
-*Note: Ensure you have the `VSCE_PAT` secret configured in your GitHub repository secrets.*
+*Note: The `VSCE_PAT` secret must be configured in your GitHub repository secrets for the marketplace upload to succeed.*
 
 ---
 
