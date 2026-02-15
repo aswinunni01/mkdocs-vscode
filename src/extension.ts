@@ -6,6 +6,20 @@ const MKDOCS_TERMINAL_NAME = 'MkDocs Preview';
 export function activate(context: vscode.ExtensionContext) {
     console.log("MkDocs preview extension activated");
 
+    let isServerRunning = false;
+
+    function updateStatusBar() {
+        if (isServerRunning) {
+            statusBarItem.text = `$(primitive-square) Stop MkDocs`;
+            statusBarItem.command = 'mkdocs-vscode.stopPreview';
+            statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
+        } else {
+            statusBarItem.text = `$(book) MkDocs`;
+            statusBarItem.command = 'mkdocs-vscode.startPreview';
+            statusBarItem.backgroundColor = undefined;
+        }
+    }
+
     // Register start command
     const disposable = vscode.commands.registerCommand('mkdocs-vscode.startPreview', () => {
 
@@ -25,6 +39,8 @@ export function activate(context: vscode.ExtensionContext) {
             terminal.sendText('mkdocs serve');
 
             vscode.window.showInformationMessage('MkDocs server starting...');
+            isServerRunning = true;
+            updateStatusBar();
 
             // NEW: Wait 2 seconds for the server to warm up, then open the browser
             setTimeout(() => {
@@ -34,15 +50,31 @@ export function activate(context: vscode.ExtensionContext) {
         })
     })
 
+    const stopDisposable = vscode.commands.registerCommand('mkdocs-vscode.stopPreview', () => {
+        const terminal = vscode.window.terminals.find(t => t.name === MKDOCS_TERMINAL_NAME);
+        if (terminal) {
+            terminal.dispose();
+        }
+        isServerRunning = false;
+        updateStatusBar();
+        vscode.window.showInformationMessage('MkDocs server stopped.');
+    })
+
     const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
 
     // Status Bar Configuration
     statusBarItem.command = 'mkdocs-vscode.startPreview';
-    statusBarItem.text = `$(book) MkDocs`;
-    statusBarItem.tooltip = 'Click to start MkDocs Preview';
-
+    updateStatusBar();
     statusBarItem.show();
-    console.log("Status Bar Item .show() called!"); // Add this log
+
+    // Listen for when terminals are closed
+    const terminalListener = vscode.window.onDidCloseTerminal(terminal => {
+        if (terminal.name === MKDOCS_TERMINAL_NAME) {
+            isServerRunning = false;
+            updateStatusBar();
+        }
+    });
+
 
     // Cleanup the command when the extension is deactivated
     context.subscriptions.push(disposable);

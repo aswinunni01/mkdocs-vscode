@@ -21,6 +21,11 @@
         "command": "mkdocs-vscode.startPreview",
         "title": "MkDocs: Start Preview",
         "category": "MkDocs"
+      },
+      {
+        "command": "mkdocs-vscode.stopPreview",
+        "title": "MkDocs: Stop Preview",
+        "category": "MkDocs"
       }
     ]
   },
