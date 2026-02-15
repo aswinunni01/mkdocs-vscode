@@ -10,6 +10,10 @@ on:
     branches:
       - main
 
+
+permissions:
+  contents: write   # 👈 REQUIRED for tagging
+
 jobs:
   build:
     strategy:
