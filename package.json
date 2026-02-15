@@ -1,0 +1,28 @@
+{
+  "name": "mkdocs-vscode",
+  "displayName": "MkDocs Preview",
+  "description": "A focused VS Code extension that spins up a live MkDocs preview for intergrated doc browsing.",
+  "version": "0.0.1",
+  "publisher": "aswinunni01",
+  "engines": {"vscode": "^1.109.0"},
+  "categories": ["Development", "Productivity"],
+  "main": "index.js",
+  "activationEvents": ["workspaceContains:**/mkdocs.yml"],
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "lint": "eslint src --ext ts",
+    "watch": "tsc -watch -p ./",
+    "compile": "tsc -p ./"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "@types/vscode": "^1.109.0",
+    "@typescript-eslint/eslint-plugin": "^8.55.0",
+    "@typescript-eslint/parser": "^8.55.0",
+    "eslint": "^9.0.0",
+    "typescript": "^5.9.3"
+  }
+}
