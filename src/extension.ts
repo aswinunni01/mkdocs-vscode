@@ -24,14 +24,14 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Register start command
     const startDisposable = vscode.commands.registerCommand('mkdocs-vscode.startPreview', (options?: { skipBrowser?: boolean }) => {
-        // Allow dynamic port configuration
         const config = vscode.workspace.getConfiguration('mkdocs-vscode');
         const port = config.get<number>('port') || 8000;
+        const mkdocsPath = config.get<string>('mkdocsPath') || 'mkdocs';
 
         // Run 'mkdocs --version' to see if it exists
-        exec('mkdocs --version', (error) => {
+        exec(`${mkdocsPath} --version`, (error) => {
             if (error) {
-                vscode.window.showErrorMessage('MkDocs not found! Please install it with: pip install mkdocs');
+                vscode.window.showErrorMessage(`MkDocs not found at "${mkdocsPath}"! Please check your settings or install it with: pip install mkdocs`);
                 return;
             }
 
@@ -43,7 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
                     openBrowser(port);
                 }
             } else {
-                server.start(port);
+                server.start(port, mkdocsPath);
                 vscode.window.showInformationMessage(`MkDocs server started at 127.0.0.1:${port}`);
                 if (shouldOpen) {
                     setTimeout(() => openBrowser(port), 2000);
@@ -82,7 +82,8 @@ export function activate(context: vscode.ExtensionContext) {
                 server.stop();
                 const config = vscode.workspace.getConfiguration('mkdocs-vscode');
                 const port = config.get<number>('port') || 8000;
-                server.start(port);
+                const mkdocsPath = config.get<string>('mkdocsPath') || 'mkdocs';
+                server.start(port, mkdocsPath);
                 updateUI(server, statusBarItem, viewProvider);
 
                 vscode.window.showInformationMessage(`Server restarted on port ${port}`);

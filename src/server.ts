@@ -16,14 +16,14 @@ export class MkDocsServer {
         return !!this.process;
     }
 
-    public start(port: number) {
+    public start(port: number, mkdocsPath: string = 'mkdocs') {
         if (this.process) return;
         this.outputChannel.clear();
         this.outputChannel.show();
-        this.outputChannel.appendLine(`[Info] Starting MkDocs on port ${port}...`);
+        this.outputChannel.appendLine(`[Info] Starting MkDocs on port ${port} using ${mkdocsPath}...`);
 
         // SPAWN: This is the production-grade way
-        this.process = spawn('mkdocs', ['serve', '-a', `127.0.0.1:${port}`], {
+        this.process = spawn(mkdocsPath, ['serve', '-a', `127.0.0.1:${port}`], {
             shell: true, // Required for Windows
             cwd: vscode.workspace.workspaceFolders?.[0].uri.fsPath
         });
