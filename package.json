@@ -4,10 +4,26 @@
   "description": "A focused VS Code extension that spins up a live MkDocs preview for intergrated doc browsing.",
   "version": "0.0.1",
   "publisher": "aswinunni01",
-  "engines": {"vscode": "^1.109.0"},
-  "categories": ["Development", "Productivity"],
-  "main": "index.js",
-  "activationEvents": ["workspaceContains:**/mkdocs.yml"],
+  "engines": {
+    "vscode": "^1.109.0"
+  },
+  "categories": [
+    "Visualization",
+    "Education"
+  ],
+  "main": "out/extension.js",
+  "activationEvents": [
+    "workspaceContains:**/mkdocs.yml"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "mkdocs-vscode.startPreview",
+        "title": "MkDocs: Start Preview",
+        "category": "MkDocs"
+      }
+    ]
+  },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "lint": "eslint src --ext ts",
