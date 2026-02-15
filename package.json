@@ -31,7 +31,7 @@
         "command": "mkdocs-vscode.startPreview",
         "title": "MkDocs: Start Preview",
         "category": "MkDocs",
-        "icon": "telescope"
+        "icon": "$(open-preview)"
       },
       {
         "command": "mkdocs-vscode.stopPreview",
@@ -44,7 +44,7 @@
         {
           "command": "mkdocs-vscode.startPreview",
           "group": "navigation",
-          "when": "resourceExtname == .md"
+          "when": "resourceFilename == mkdocs.yml"
         }
       ]
     },
@@ -53,7 +53,7 @@
         {
           "id": "mkdocs-vscode",
           "title": "Mkdocs Preview",
-          "icon": "telescope"
+          "icon": "$(open-preview)"
         }
       ]
     },
@@ -63,7 +63,7 @@
           "id": "mkdocs-vscode-view",
           "name": "MkDocs Preview",
           "type": "webview",
-          "icon": "telescope"
+          "icon": "$(debug-stop)"
         }
       ]
     }
